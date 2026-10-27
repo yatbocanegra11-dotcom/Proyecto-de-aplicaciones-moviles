@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         //evento para inciar sesion
         btnInicio.setOnClickListener {
             //TODO: AGREGAR METODO DE INCIO DE SESION
-
+            iniciarSesion()
         }
 
 
@@ -43,6 +44,36 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, RegistrarActivity::class.java)
             startActivity(intent)
         }
+
+    }
+    //METODO PARA INICIAR SESION
+    private fun iniciarSesion(){
+
+        //acceder a la informacion que escribe el usuario
+        val correo = etCorreo.text.toString().trim()
+        val pass = etPass.text.toString().trim()
+
+        if (correo.isEmpty() || pass.isEmpty()){
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT)
+            return
+        }
+
+        //llamar al metodo de incio de sesion de la BD
+        val resultado = dbHelper.IniciarSesion(correo,pass)
+        if (resultado){
+            Toast.makeText(this, "BIENVENIDO", Toast.LENGTH_SHORT)
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+
+            //CERRAR PANTALLA ACTUAL
+            finish()
+
+        }else{
+            Toast.makeText(this, "DATOS INCORRECTOS", Toast.LENGTH_SHORT)
+        }
+
+
+
 
     }
 }

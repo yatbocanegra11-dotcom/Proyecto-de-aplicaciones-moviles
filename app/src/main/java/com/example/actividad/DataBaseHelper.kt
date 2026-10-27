@@ -73,7 +73,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(
 
     }
 
-    //metodo pra consultar a un uuario
+    //metodo pra consultar a un usuario
     fun IniciarSesion(correo : String, password: String) : Boolean{
         val db = readableDatabase
         val query_sql ="""
